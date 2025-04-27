@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '20px' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '2.2rem', marginBottom: '1rem', textAlign: 'center' }}>
         제 4회 민주정우회 총선
       </h1>
       <p style={{ marginBottom: '2rem', fontSize: '1.2rem', color: '#555', textAlign: 'center' }}>
