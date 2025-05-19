@@ -15,6 +15,7 @@ export default function CandidatesPage() {
   });
 
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [alertVisible, setAlertVisible] = useState(false);
   const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
 
   const handleVoteChange = (id, delta) => {
@@ -29,7 +30,8 @@ export default function CandidatesPage() {
 
   const handleSubmit = async () => {
     if (totalVotes !== 3) {
-      alert('정확히 3표를 모두 사용해야 합니다!');
+      setAlertVisible(true);
+      setTimeout(() => setAlertVisible(false), 3000);
       return;
     }
 
@@ -50,6 +52,19 @@ export default function CandidatesPage() {
   return (
     <div style={{ padding: 40 }}>
       <h1>후보를 선택하세요 (총 3표)</h1>
+
+      {alertVisible && (
+        <div style={{
+          backgroundColor: '#fdecea',
+          color: '#d32f2f',
+          padding: '12px 20px',
+          marginBottom: '20px',
+          border: '1px solid #f5c2c0',
+          borderRadius: '6px'
+        }}>
+          정확히 3표를 모두 사용해야 합니다!
+        </div>
+      )}
 
       {candidates.map((c) => (
         <div
@@ -81,7 +96,7 @@ export default function CandidatesPage() {
 
       <button
         onClick={handleSubmit}
-        disabled={totalVotes !== 3}
+        disabled={totalVotes > 3}
         style={{ marginTop: '20px', padding: '10px 20px' }}
       >
         투표 제출
