@@ -130,7 +130,7 @@ export default function CandidatesPage() {
           >
             <h2>{selectedCandidate.name}</h2>
             <p><strong>{selectedCandidate.slogan}</strong></p>
-            <p style={{ marginTop: '15px' }}>{selectedCandidate.details}</p>
+            <p style={{ marginTop: '15px' , whiteSpace: 'pre-line'}}>{selectedCandidate.details}</p>
             <button
               onClick={() => setSelectedCandidate(null)}
               style={{
