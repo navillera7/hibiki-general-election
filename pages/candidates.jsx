@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import candidates from '@/lib/candidates';
+import { useRouter } from 'next/router';
 
 export default function CandidatesPage() {
   const [votes, setVotes] = useState(() => {
@@ -22,6 +23,29 @@ export default function CandidatesPage() {
       [id]: votes[id] + delta,
     });
   };
+
+const router = useRouter();
+const { code } = router.query;
+
+const handleSubmit = async () => {
+  if (totalVotes !== 3) {
+    alert('정확히 3표를 모두 사용해야 합니다!');
+    return;
+  }
+
+  const res = await fetch('/api/vote', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, votes }),
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    router.push('/result');
+  } else {
+    alert(data.message || '투표 오류 발생');
+  }
+};
 
   return (
     <div style={{ padding: 40 }}>
