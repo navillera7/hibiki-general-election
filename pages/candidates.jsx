@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import candidates from '@/lib/candidates';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import candidates from '@/lib/candidates';
 
 export default function CandidatesPage() {
+  const router = useRouter();
+  const { code } = router.query;
+
   const [votes, setVotes] = useState(() => {
     const initial = {};
     candidates.forEach((c) => {
@@ -24,28 +27,25 @@ export default function CandidatesPage() {
     });
   };
 
-const router = useRouter();
-const { code } = router.query;
+  const handleSubmit = async () => {
+    if (totalVotes !== 3) {
+      alert('정확히 3표를 모두 사용해야 합니다!');
+      return;
+    }
 
-const handleSubmit = async () => {
-  if (totalVotes !== 3) {
-    alert('정확히 3표를 모두 사용해야 합니다!');
-    return;
-  }
+    const res = await fetch('/api/vote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, votes }),
+    });
 
-  const res = await fetch('/api/vote', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code, votes }),
-  });
-
-  const data = await res.json();
-  if (data.success) {
-    router.push('/result');
-  } else {
-    alert(data.message || '투표 오류 발생');
-  }
-};
+    const data = await res.json();
+    if (data.success) {
+      router.push('/result');
+    } else {
+      alert(data.message || '투표 오류 발생');
+    }
+  };
 
   return (
     <div style={{ padding: 40 }}>
@@ -80,7 +80,7 @@ const handleSubmit = async () => {
       ))}
 
       <button
-        onClick={() => alert('투표 제출 기능은 여기에 구현하세요')}
+        onClick={handleSubmit}
         disabled={totalVotes !== 3}
         style={{ marginTop: '20px', padding: '10px 20px' }}
       >
