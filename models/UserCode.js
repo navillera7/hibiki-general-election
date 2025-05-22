@@ -16,4 +16,5 @@ const UserCodeSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.models.UserCode || mongoose.model('UserCode', userCodeSchema);
+export default mongoose.models.UserCode || mongoose.model('UserCode', UserCodeSchema);
+
