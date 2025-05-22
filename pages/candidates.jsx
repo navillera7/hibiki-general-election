@@ -43,7 +43,7 @@ export default function CandidatesPage() {
 
     const data = await res.json();
     if (data.success) {
-      router.push('/result');
+      router.push(`/agenda-vote?code=${code}`);
     } else {
       alert(data.message || '투표 오류 발생');
     }
