@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 const choices = [
-  { id: 'yes', label: '찬성' },
-  { id: 'no', label: '반대' },
+  { id: '박시이', label: '박시이' },
+  { id: '돌돔', label: '돌돔' },
   { id: 'abstain', label: '기권' },
 ];
 
