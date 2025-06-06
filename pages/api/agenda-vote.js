@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   }
 
   if (user.agendaVote) {
-    return res.status(400).json({ success: false, message: '이미 안건에 대한 투표를 완료했습니다.' });
+    return res.status(400).json({ success: false, message: '이미 투표를 완료했습니다.' });
   }
 
   user.agendaVote = vote;
