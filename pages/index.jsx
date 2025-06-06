@@ -30,6 +30,7 @@ export default function Home() {
     });
 
     const data = await res.json();
+    console.log(code);
     if (data.success) {
       router.push(`/candidates?code=${code}`);
     } else if (code == 'hibiki') {
