@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   const users = await UserCode.find({ agendaVote: { $exists: true } });
 
   const summary = {
-    yes: 0,
-    no: 0,
+    박시이: 0,
+    돌돔: 0,
     abstain: 0,
   };
 
