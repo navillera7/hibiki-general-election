@@ -39,8 +39,8 @@ export default function AgendaVotePage() {
 
   return (
     <div style={{ padding: 40 }}>
-      <h1>안건에 대한 찬반 투표</h1>
-      <p>해당 안건에 대해 어떻게 생각하시나요?</p>
+      <h1>총리 투표</h1>
+      <p> </p>
 
       {choices.map((c) => (
         <div key={c.id} style={{ marginBottom: '12px' }}>
