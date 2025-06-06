@@ -30,10 +30,9 @@ export default function Home() {
     });
 
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       router.push(`/candidates?code=${code}`);
-    } else if (data == 'hibiki') {
+    } else if (code == 'hibiki') {
       alert(data.message || '히비키쨩 다이스키');
     } else {
       alert(data.message || '코드가 유효하지 않습니다.');
