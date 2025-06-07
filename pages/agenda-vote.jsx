@@ -30,7 +30,7 @@ export default function AgendaVotePage() {
 
     const data = await res.json();
     if (data.success) {
-      router.push('/thank-you');
+      router.push('/result');
     } else {
       alert(data.message || '투표 실패');
       setSubmitting(false);
