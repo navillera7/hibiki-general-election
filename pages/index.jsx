@@ -32,7 +32,7 @@ export default function Home() {
     const data = await res.json();
     console.log(code);
     if (data.success) {
-      router.push(`/candidates?code=${code}`);
+      router.push(`/vote?code=${code}`);
     } else if (code == 'hibiki') {
       alert(data.message || '히비키쨩 다이스키');
     } else {
