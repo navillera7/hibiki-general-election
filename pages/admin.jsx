@@ -30,10 +30,10 @@ export default function AdminPage() {
 
   return (
     <div style={{ padding: 40 }}>
-      <h1>관리자 투표 결과 요약</h1>
+      <h1>투표 현황</h1>
 
       <section style={{ marginBottom: 50 }}>
-        <h2>후보자 투표 결과</h2>
+        <h2>정당 투표 결과</h2>
         {candidateResults.length === 0 ? (
           <p>후보자에 대한 투표 결과가 없습니다.</p>
         ) : (
@@ -52,7 +52,7 @@ export default function AdminPage() {
       </section>
 
       <section>
-        <h2>안건 투표 결과</h2>
+        <h2>총리 투표 결과</h2>
         {agendaResults.length === 0 ? (
           <p>안건에 대한 투표 결과가 없습니다.</p>
         ) : (
