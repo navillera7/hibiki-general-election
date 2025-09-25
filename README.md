@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 민정회 투표 시스템 
+제작 by navillera7
 
-## Getting Started
+## 코드 생성/업로드
+upload-codes.js 와 generater.py 가 생성한 codes.js가 있는 폴더에서 ``.env `` 파일 생성 후
+MONGO_URI = 
+터미널에:
+``node upload-codes.js
+``
+입력
 
-First, run the development server:
+## 총리 바꾸기
+pages -> vote.jsx
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+models -> UserCode.js 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+pages->api->agenda-summary.js
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+변경 필요
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 정당 바꾸기
+lib-> candidate.js 
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+변경
