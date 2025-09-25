@@ -6,7 +6,6 @@ import candidates from '@/lib/candidates';
 const pmChoices = [
   { id: '박시이', label: '박시이' },
   { id: '돌돔', label: '돌돔' },
-  { id: 'abstain', label: '기권' },
 ];
 
 export default function CombinedVotePage() {
