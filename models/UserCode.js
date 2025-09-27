@@ -10,7 +10,7 @@ const UserCodeSchema = new mongoose.Schema({
   },
   agendaVote: {
     type: String,
-    enum: ['피바', '돌돔'],
+    enum: ['피바', '케이비'],
     default: null,
   },
 });
