@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   const summary = {
     피바: 0,
-    돌돔: 0,
+    케이비: 0,
   };
 
   users.forEach(user => {
