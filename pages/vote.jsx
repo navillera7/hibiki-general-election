@@ -5,7 +5,7 @@ import candidates from '@/lib/candidates';
 
 const pmChoices = [
   { id: '피바', label: '피바' },
-  { id: '돌돔', label: '돌돔' },
+  { id: '케이비', label: '케이비' },
 ];
 
 export default function CombinedVotePage() {
