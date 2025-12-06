@@ -4,9 +4,42 @@ import { useRouter } from 'next/router';
 import candidates from '@/lib/candidates';
 
 const pmChoices = [
-  { id: '피바', label: '피바' },
-  { id: '케이비', label: '케이비' },
+  { id: '찬성', label: '찬성' },
+  { id: '반대', label: '반대' },
 ];
+
+const JungChoices = [
+  { id: '매우잘함', label: '매우잘함' },
+  { id: '잘함', label: '잘함' },
+  { id: '보통', label: '보통' },
+  { id: '못함', label: '못함' },
+  { id: '매우못함', label: '매우못함' },
+]
+
+const JungDownChoices = [
+  { id: "매우필요", label: "매우필요" },
+  { id: "필요", label: "필요" },
+  { id: "보통", label: "보통" },
+  { id: "필요없음", label: "필요없음" },
+  { id: "전혀필요없음", label: "전혀필요없음" },
+];
+
+const LeeChoices = [
+  { id: '매우잘함', label: '매우잘함' },
+  { id: '잘함', label: '잘함' },
+  { id: '보통', label: '보통' },
+  { id: '못함', label: '못함' },
+  { id: '매우못함', label: '매우못함' },
+]
+
+const change_constitution = [
+  { id: "매우필요", label: "매우필요" },
+  { id: "필요", label: "필요" },
+  { id: "보통", label: "보통" },
+  { id: "필요없음", label: "필요없음" },
+  { id: "전혀필요없음", label: "전혀필요없음" },
+];
+
 
 export default function CombinedVotePage() {
   const router = useRouter();
@@ -23,6 +56,18 @@ export default function CombinedVotePage() {
 
   // 총리 1표
   const [pmVote, setPmVote] = useState('');
+
+  // 정청래 지도부 평가
+  const [Jungvote, setJungVote] = useState('');
+
+  // 이재명 정부 평가
+  const [Leevote, setLeeVote] = useState('');
+
+  //정청래 지방선거 전 사퇴 여부 
+  const [JungDownvote, setJungDownChoices] = useState('');
+
+  //헌법 개정 필요성 여부
+  const [change_constitutionvote, setChange_constitution] = useState('');
 
   // 모달(공약/상세)
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -44,6 +89,22 @@ export default function CombinedVotePage() {
     }
     if (!pmVote) {
       alert('총리 후보를 한 명 선택해 주세요.');
+      return;
+    }
+    if (!Jungvote) {
+      alert('정청래 지도부 평가를 선택해 주세요.');
+      return;
+    }
+    if (!Leevote) {
+      alert('이재명 정부 평가를 선택해 주세요.');
+      return;
+    }
+    if (!JungDownvote) {
+      alert('정청래 지도부가 지선 전에 사퇴해야 하는지 선택해 주세요.');
+      return;
+    }
+    if (!change_constitutionvote) {
+      alert('헌법 개정 필요성에 대해 선택해 주세요.');
       return;
     }
 
@@ -68,7 +129,43 @@ export default function CombinedVotePage() {
       const data2 = await res2.json();
       if (!data2.success) throw new Error(data2.message || '총리 투표 제출 오류');
 
-      // 3) 결과 페이지로
+      // 3) 정청래 지도부 평가 제출 (/api/Jung-vote) --- NEW
+      const res3 = await fetch('/api/Jung-vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, vote: Jungvote }),
+      });
+      const data3 = await res3.json();
+      if (!data3.success) throw new Error(data3.message || '정청래 지도부 평가 제출 오류');
+      
+      // 4) 이재명 정부 평가 제출 (/api/Lee-vote) --- NEW
+      const res4 = await fetch('/api/Lee-vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, vote: Leevote }),
+      });
+      const data4 = await res4.json();
+      if (!data4.success) throw new Error(data4.message || '이재명 정부 평가 제출 오류');
+      
+      // 5) 정청래 지방선거 전 사퇴 여부 제출 (/api/JungDown-vote) --- NEW
+      const res5 = await fetch('/api/JungDown-vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, vote: JungDownvote }),
+      });
+      const data5 = await res5.json();
+      if (!data5.success) throw new Error(data5.message || '정청래 지방선거 전 사퇴 여부 제출 오류');
+      
+      // 6) 헌법 개정 필요성 여부 제출 (/api/change_constitution-vote) --- NEW
+      const res6 = await fetch('/api/change_constitution-vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, vote: change_constitutionvote }),
+      });
+      const data6 = await res6.json();
+      if (!data6.success) throw new Error(data6.message || '헌법 개정 필요성 여부 제출 오류');    
+
+      // 5) 결과 페이지로
       router.push('/result');
     } catch (e) {
       console.error(e);
@@ -136,7 +233,7 @@ export default function CombinedVotePage() {
 
       {/* 섹션 2: 총리 투표 (1표 라디오) */}
       <section style={{ marginTop: 32 }}>
-        <h2>총리 투표</h2>
+        <h2>케이비 총리 찬반 투표</h2>
         {pmChoices.map((c) => (
           <div key={c.id} style={{ marginBottom: 12 }}>
             <label style={{ cursor: 'pointer' }}>
@@ -152,6 +249,83 @@ export default function CombinedVotePage() {
           </div>
         ))}
       </section>
+      {/* 섹션 3: 정청래 지도부 평가 */}
+      <section style={{ marginTop: 32 }}>
+        <h2>정청래 지도부 평가</h2>
+        {JungChoices.map((c) => (
+          <div key={c.id} style={{ marginBottom: 12 }}>
+            <label style={{ cursor: 'pointer' }}>
+              <input
+                type="radio"
+                name="Jung-vote"
+                value={c.id}
+                checked={Jungvote === c.id}
+                onChange={() => setJungVote(c.id)}
+              />{' '}
+              {c.label}
+            </label>
+          </div>
+        ))}
+      </section>
+      {/* 섹션 4: 이재명 정부 평가 */}
+      <section style={{ marginTop: 32 }}>
+        <h2>이재명 정부 평가</h2>
+        {LeeChoices.map((c) => (
+          <div key={c.id} style={{ marginBottom: 12 }}>
+            <label
+              style={{ cursor: 'pointer' }}            >
+              <input
+                type="radio"
+                name="Lee-vote"
+                value={c.id}
+                checked={Leevote === c.id}
+                onChange={() => setLeeVote(c.id)}
+              />{' '}
+              {c.label}
+            </label>
+          </div>
+        ))}
+      </section>
+      {/* 섹션 5: 정청래 지방선거 전 사퇴 여부 */}
+      <section style={{ marginTop: 32 }}>
+        <h2>정청래 지도부가 지방선거 전에 사퇴해야 한다고 생각하십니까?</h2>
+        {JungDownChoices.map((c) => (
+          <div key={c.id} style={{ marginBottom: 12 }}>
+            <label
+              style={{ cursor: 'pointer' }}            >
+              <input
+                type="radio"
+                name="JungDown-vote"
+                value={c.id}
+                checked={JungDownvote === c.id}
+                onChange={() => setJungDownChoices(c.id)}
+              />{' '}
+              {c.label}
+            </label>
+          </div>
+        ))}
+      </section>
+      {/* 섹션 6: 헌법 개정 필요성 여부 */}
+      <section style={{ marginTop: 32 }}>
+        <h2>헌법 개정이 필요하다고 생각하십니까?</h2>
+        {change_constitution.map((c) => (
+          <div key={c.id} style={{ marginBottom: 12 }}>
+            <label
+              style={{ cursor: 'pointer' }}            >
+              <input
+                type="radio"
+                name="change_constitution-vote"
+                value={c.id}
+                checked={change_constitutionvote === c.id}
+                onChange={() => setChange_constitution(c.id)}
+              />{' '}
+              {c.label}
+            </label>
+          </div>
+        ))}
+      </section>  
+
+      {/* 최종 제출 버튼 */}    
 
       <button
         onClick={handleSubmitAll}
