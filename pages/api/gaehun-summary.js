@@ -5,16 +5,18 @@ import UserCode from '@/models/UserCode';
 export default async function handler(req, res) {
   await dbConnect();
 
-  const users = await UserCode.find({ agendaVote: { $exists: true } });
-
+  const users = await UserCode.find({ Gaehunvote: { $exists: true } });
   const summary = {
-    찬성: 0,
-    반대: 0,
+    매우필요: 0,
+    필요: 0,
+    보통: 0,
+    필요없음: 0,
+    전혀필요없음: 0,
   };
 
   users.forEach(user => {
-    if (user.agendaVote && summary[user.agendaVote] !== undefined) {
-      summary[user.agendaVote]++;
+    if (user.Gaehunvote && summary[user.Gaehunvote] !== undefined) {
+      summary[user.Gaehunvote]++;
     }
   });
 
